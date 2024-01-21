@@ -1,9 +1,8 @@
 package main
 
-
 import (
     "os"
-    dt "lothardp/godep/dependency_tree"
+    dt "lothardp/godep/dependencytree"
 )
 
 func main() {
