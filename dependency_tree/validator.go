@@ -1,4 +1,4 @@
-package dependencytree
+package dependency_tree
 
 import (
 	"encoding/json"
@@ -6,11 +6,6 @@ import (
 	"io/ioutil"
 	"os"
 )
-
-type FileDeps struct {
-	Dependencies []string
-	Dependents    []string
-}
 
 func ValidateJSON(fileName string) error {
 	jsonMap, err := openJSONFile(fileName)
@@ -29,7 +24,7 @@ func ValidateJSON(fileName string) error {
 	return nil
 }
 
-func validateDependencies(jsonMap map[string]FileDeps) error {
+func validateDependencies(jsonMap DependencyTreeJSON) error {
 	for file, deps := range jsonMap {
 		for _, dependency := range deps.Dependencies {
 			dep, ok := jsonMap[dependency]
@@ -61,7 +56,7 @@ func contains(slice []string, element string) bool {
 	return false
 }
 
-func openJSONFile(fileName string) (map[string]FileDeps, error) {
+func openJSONFile(fileName string) (DependencyTreeJSON, error) {
 	jsonFile, err := os.Open(fileName)
 
 	if err != nil {
@@ -73,7 +68,7 @@ func openJSONFile(fileName string) (map[string]FileDeps, error) {
 
 	jsonBytes, _ := ioutil.ReadAll(jsonFile)
 
-	var jsonMap map[string]FileDeps
+	var jsonMap DependencyTreeJSON
 
 	err = json.Unmarshal(jsonBytes, &jsonMap)
 	if err != nil {
