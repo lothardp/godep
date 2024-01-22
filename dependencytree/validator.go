@@ -1,14 +1,11 @@
 package dependencytree
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"os"
 )
 
 func ValidateJSON(fileName string) error {
-	jsonMap, err := openJSONFile(fileName)
+	jsonMap, err := OpenJSONFile(fileName)
 
 	if err != nil {
 		return err
@@ -54,26 +51,4 @@ func contains(slice []string, element string) bool {
 		}
 	}
 	return false
-}
-
-func openJSONFile(fileName string) (DependencyTreeJSON, error) {
-	jsonFile, err := os.Open(fileName)
-
-	if err != nil {
-		return nil, err
-	}
-
-	fmt.Println("Successfully opened ", fileName)
-	defer jsonFile.Close()
-
-	jsonBytes, _ := ioutil.ReadAll(jsonFile)
-
-	var jsonMap DependencyTreeJSON
-
-	err = json.Unmarshal(jsonBytes, &jsonMap)
-	if err != nil {
-		return nil, err
-	}
-
-	return jsonMap, nil
 }

@@ -5,7 +5,7 @@ import (
 )
 
 var (
-    // slice of {{file}, {dependencies}}
+	// slice of {{file}, {dependencies}}
 	inputJSON = [][][]string{
 		{{"a"}, {"b", "c", "d", "e", "mod1/a", "mod2/a", "mod3/b", "mod4/submod1/a"}},
 		{{"b"}, {"c", "d", "e", "mod1/a", "mod2/a", "mod3/b", "mod4/submod1/a"}},
@@ -35,9 +35,9 @@ func createDTJSON(inputJSON [][][]string) DependencyTreeJSON {
 
 	for fileName, deps := range dtJSON {
 		for _, dep := range deps.Dependencies {
-            tmp := dtJSON[dep]
-            tmp.Dependents = append(tmp.Dependents, fileName)
-            dtJSON[dep] = tmp
+			tmp := dtJSON[dep]
+			tmp.Dependents = append(tmp.Dependents, fileName)
+			dtJSON[dep] = tmp
 		}
 	}
 
@@ -45,7 +45,7 @@ func createDTJSON(inputJSON [][][]string) DependencyTreeJSON {
 }
 
 func TestBuildDependencyTree(t *testing.T) {
-    jsonMap := createDTJSON(inputJSON)
+	jsonMap := createDTJSON(inputJSON)
 
 	dt := BuildDependencyTree(jsonMap)
 

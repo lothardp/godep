@@ -4,6 +4,16 @@ type DependencyTree struct {
 	Root Module
 }
 
+func NewDependencyTree(depsFile string) *DependencyTree {
+	djJSON, err := OpenJSONFile(depsFile)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return BuildDependencyTree(djJSON)
+}
+
 func BuildDependencyTree(dtJSON DependencyTreeJSON) *DependencyTree {
 	dt := DependencyTree{}
 
